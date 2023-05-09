@@ -1,0 +1,8 @@
+.11tycache/
+.cache/
+.DS_Store
+.env
+node_modules/
+public
+# Local Netlify folder
+.netlify
