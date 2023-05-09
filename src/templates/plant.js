@@ -1,6 +1,5 @@
 import * as React from "react";
 import Layout from "../components/layout";
-//import { Review } from "../components/reviews";
 
 function Plant({ pageContext }) {
   const { plant } = pageContext;
@@ -24,7 +23,6 @@ function Plant({ pageContext }) {
       <p>
         <strong>Watering</strong>: {plant.watering}
       </p>
-      {/* <Review plant={plant}></Review> */}
     </Layout>
   );
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import "../styles/global.css";
 import Layout from "../components/layout";
 import Card from "../components/Card.js";

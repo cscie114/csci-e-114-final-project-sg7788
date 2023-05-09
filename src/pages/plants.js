@@ -1,11 +1,10 @@
 import * as React from "react";
-import { graphql, Link } from "gatsby";
+import { graphql } from "gatsby";
 import "../styles/global.css";
 import Layout from "../components/layout";
 import Card from "../components/Card.js";
-//import { ReviewsAvailableIcon } from "../components/reviews";
 
-const plantsList = ({ data, pageContext }) => {
+const plantsList = ({ data }) => {
   const plants = data?.allPlants?.nodes || [];
 
   // list all of the plants
@@ -28,7 +27,7 @@ const plantsList = ({ data, pageContext }) => {
                     <p>
                       <em>{plant.scientific_name}</em>
                     </p>
-                    <p className={badge}>{plant.cycle}</p>
+                    <p>{plant.cycle}</p>
                   </Card>
                 </a>
               </li>

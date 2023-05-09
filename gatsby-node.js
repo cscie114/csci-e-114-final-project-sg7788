@@ -2,15 +2,14 @@ require("dotenv").config();
 const EleventyFetch = require("@11ty/eleventy-fetch");
 const path = require("path");
 
-// get 100 Plants at a time until all Plants are retrieved
 async function getPlants() {
   let apiKey = process.env.PLANT_API_KEY;
   let plantListUrl = "https://perenual.com/api/species-list";
   let requestParams = {
     cycle: "annual",
     current_page: 1,
-    to: 30,
-    per_page: 30,
+    to: 200,
+    per_page: 200,
     key: apiKey,
   };
 
@@ -26,7 +25,7 @@ async function getPlants() {
     console.log(requestUrl);
 
     try {
-      // fetch the data from the `/Plants` endpoint, using the full request URL
+      // fetch the data from the `/plants` endpoint, using the full request URL
       let plantsData = await EleventyFetch(requestUrl, {
         duration: "1d",
         type: "json",
@@ -35,7 +34,6 @@ async function getPlants() {
           headers: {
             "user-agent":
               "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
-            // "X-Api-Key": apiKey,
           },
         },
       });
@@ -44,12 +42,11 @@ async function getPlants() {
       allPlantsData.data.push(...plantsData.data);
       allPlantsData.total = plantsData.total;
 
-      // determine
-      totalPlants = plantsData.total; // 10102
+      totalPlants = plantsData.total;
       lastPage = plantsData.last_page;
-      prevPage = requestParams.current_page - 1; // 0
-      nextPage = requestParams.current_page + 1; // 1 + 1 = 2
-      requestParams.current_page = nextPage; // 100
+      prevPage = requestParams.current_page - 1;
+      nextPage = requestParams.current_page + 1;
+      requestParams.current_page = nextPage;
       console.log("previous page: ", prevPage);
       console.log("next page: ", nextPage);
       console.log("total plants: ", totalPlants);
