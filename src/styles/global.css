@@ -9,8 +9,7 @@ a {
 }
 
 a div:hover {
-  /* border: 1px solid green; */
-  filter: drop-shadow(0 0 0.2rem #bbb);
+  border: 1px solid green;
 }
 
 .badge {
