@@ -8,7 +8,11 @@ You can access the site here: [Plant Explorer](https://scintillating-mermaid-f9e
 
 **Note:** In order to run this application, you must have an API key from Perenual. To obtain this key, please visit the ["registration page"](https://perenual.com/register) on the Perenual site.
 
-After cloning this repo, locate the `.env` file at the root of the application and paste the API key inside the quotes within that file.
+After cloning this repo, create a `.env` file at the root of the application, add the following code to the file, and place the API key between the quotes:
+
+```
+PLANT_API_KEY=""
+```
 
 To run the application, type the following commands in Terminal:
 

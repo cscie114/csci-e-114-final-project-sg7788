@@ -1,6 +1,7 @@
 require("dotenv").config();
 const EleventyFetch = require("@11ty/eleventy-fetch");
 const path = require("path");
+const createPaginatedPages = require("gatsby-paginate");
 
 async function getPlants() {
   let apiKey = process.env.PLANT_API_KEY;
@@ -8,8 +9,9 @@ async function getPlants() {
   let requestParams = {
     cycle: "annual",
     current_page: 1,
-    to: 30,
-    per_page: 30,
+    total: 198,
+    // to: 30,
+    // per_page: 30,
     key: apiKey,
   };
 
@@ -49,7 +51,9 @@ async function getPlants() {
       requestParams.current_page = nextPage;
       console.log("previous page: ", prevPage);
       console.log("next page: ", nextPage);
+      console.log("last page: ", lastPage);
       console.log("total plants: ", totalPlants);
+      console.log("array: ", allPlantsData);
     } catch (err) {
       console.error("Something went wrong with request\n" + requestUrl);
       console.log(err);
@@ -88,9 +92,27 @@ exports.sourceNodes = async ({
 //from Gatsby documentation: https://www.gatsbyjs.com/docs/creating-and-modifying-pages/
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
+  const { createRedirect } = actions;
+
+  createRedirect({
+    fromPath: `/`,
+    toPath: `/plants`,
+    redirectInBrowser: true,
+    isPermanent: true,
+  });
+
   const queryResults = await graphql(`
     query {
       allPlants {
+        pageInfo {
+          currentPage
+          pageCount
+          itemCount
+          perPage
+          totalCount
+          hasNextPage
+          hasPreviousPage
+        }
         nodes {
           id
           common_name
@@ -119,5 +141,15 @@ exports.createPages = async ({ graphql, actions }) => {
         plant: node,
       },
     });
+  });
+
+  const plantPages = queryResults.data.allPlants.nodes;
+
+  createPaginatedPages({
+    edges: plantPages,
+    createPage,
+    pageTemplate: "src/templates/pagination.js",
+    pageLength: 10,
+    pathPrefix: "plants",
   });
 };

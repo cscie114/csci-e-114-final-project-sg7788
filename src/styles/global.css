@@ -4,12 +4,24 @@ html {
   margin: 0 auto;
 }
 
+h1,
+h2,
+.container {
+  clear: both;
+  padding-left: 40px;
+}
+
+h1 a {
+  color: #444;
+}
+
 h2 {
   color: darkgreen;
 }
 
 a {
   text-decoration: none;
+  color: brown;
 }
 
 a div:hover {
@@ -39,8 +51,28 @@ li {
   padding-top: 30px;
 }
 
-.st-default-search-input {
-  border: 1px solid #ccc;
-  height: 25px;
-  width: 250px;
+.badge {
+  background-color: olive;
+  border: 1px solid olive;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  padding: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pagination {
+  clear: both;
+  padding: 40px;
+}
+
+span {
+  padding: 0 10px 30px 0;
+}
+
+.link {
+  clear: both;
+  padding-left: 40px;
 }
