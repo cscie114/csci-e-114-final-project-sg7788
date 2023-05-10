@@ -3,8 +3,8 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `The Metropolitan Musem of Art Collection`,
+    title: `Plant Explorer`,
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [],
-}
+};

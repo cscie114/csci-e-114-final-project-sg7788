@@ -1,8 +1,6 @@
 import * as React from "react";
 import { Link } from "gatsby";
 
-let process;
-
 const pageStyles = {
   color: "#232129",
   padding: "96px",
@@ -17,13 +15,13 @@ const headingStyles = {
 const paragraphStyles = {
   marginBottom: 48,
 };
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-};
+// const codeStyles = {
+//   color: "#8A6534",
+//   padding: 4,
+//   backgroundColor: "#FFF4DB",
+//   fontSize: "1.25rem",
+//   borderRadius: 4,
+// };
 
 const NotFoundPage = () => {
   return (
@@ -32,6 +30,7 @@ const NotFoundPage = () => {
       <p style={paragraphStyles}>
         Sorry 😔, we couldn’t find what you were looking for.
         <br />
+        {/* not sure why 404 page is causing errors while workflow runs
         {process.env.NODE_ENV === "development" ? (
           <>
             <br />
@@ -39,7 +38,7 @@ const NotFoundPage = () => {
             <br />
           </>
         ) : null}
-        <br />
+        <br /> */}
         <Link to="/">Go home</Link>.
       </p>
     </main>
