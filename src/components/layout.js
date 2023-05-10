@@ -1,17 +1,15 @@
 import * as React from "react";
-import { Link } from "gatsby";
 
 const Layout = ({ pageTitle, children }) => {
   return (
     <div>
       <header>
-        <h1>Plants Database</h1>
-        <nav>
-          <p>
-            <Link to="/">Home</Link>
-          </p>
-        </nav>
+        <h1>Plant Explorer</h1>
       </header>
+      <nav>
+        Search: <input type="text" className="st-default-search-input"></input>
+        <div className="st-search-container"></div>
+      </nav>
       <main>
         <h2>{pageTitle}</h2>
         {children}

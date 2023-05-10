@@ -8,8 +8,8 @@ async function getPlants() {
   let requestParams = {
     cycle: "annual",
     current_page: 1,
-    to: 200,
-    per_page: 200,
+    to: 30,
+    per_page: 30,
     key: apiKey,
   };
 
@@ -54,7 +54,7 @@ async function getPlants() {
       console.error("Something went wrong with request\n" + requestUrl);
       console.log(err);
     }
-  } while (nextPage <= 2);
+  } while (nextPage <= lastPage);
   return allPlantsData;
 }
 
