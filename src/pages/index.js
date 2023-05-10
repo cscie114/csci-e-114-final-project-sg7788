@@ -21,6 +21,7 @@ const plantsList = ({ data }) => {
                       <img
                         src={plant.default_image.thumbnail}
                         alt={plant.common_name}
+                        data-testid="image"
                       />
                     </p>
                     <h3>{plant.common_name}</h3>
