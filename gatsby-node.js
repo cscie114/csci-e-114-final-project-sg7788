@@ -27,7 +27,6 @@ async function getPlants() {
     console.log(requestUrl);
 
     try {
-      // fetch the data from the `/plants` endpoint, using the full request URL
       let plantsData = await EleventyFetch(requestUrl, {
         duration: "1d",
         type: "json",
@@ -53,7 +52,7 @@ async function getPlants() {
       console.log("next page: ", nextPage);
       console.log("last page: ", lastPage);
       console.log("total plants: ", totalPlants);
-      console.log("array: ", allPlantsData);
+      //console.log("array: ", allPlantsData);
     } catch (err) {
       console.error("Something went wrong with request\n" + requestUrl);
       console.log(err);
@@ -61,6 +60,39 @@ async function getPlants() {
   } while (nextPage <= lastPage);
   return allPlantsData;
 }
+
+async function getBlogPosts() {
+  let blogUrl =
+    "https://public-api.wordpress.com/rest/v1.1/sites/annualsplantexplorer.wordpress.com/posts/";
+
+  let allBlogPostsData = { posts: [] };
+
+  try {
+    let blogPostsData = await EleventyFetch(blogUrl, {
+      duration: "1d",
+      type: "json",
+      directory: ".11tycache",
+      fetchOptions: {
+        headers: {
+          "user-agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+        },
+      },
+    });
+
+    allBlogPostsData.posts.push(...blogPostsData.posts);
+    allBlogPostsData.total = blogPostsData.total;
+
+    console.log("array: ", allBlogPostsData);
+  } catch (err) {
+    console.error("Something went wrong with request\n" + requestUrl);
+    console.log(err);
+  }
+
+  return allBlogPostsData;
+}
+
+// FOR PLANTS
 
 // create node for each plant
 exports.sourceNodes = async ({
@@ -94,6 +126,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
   const { createRedirect } = actions;
 
+  // redirect homepage to plants listing page that is being created by createPaginatedPages()
   createRedirect({
     fromPath: `/`,
     toPath: `/plants`,
@@ -130,7 +163,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
 
-  // use the plant.js as the template for each created page
+  // create a page for each plant
   const plantTemplate = path.resolve(`src/templates/plant.js`);
   queryResults.data.allPlants.nodes.forEach((node) => {
     createPage({
@@ -151,5 +184,26 @@ exports.createPages = async ({ graphql, actions }) => {
     pageTemplate: "src/templates/pagination.js",
     pageLength: 10,
     pathPrefix: "plants",
+  });
+
+  // FOR BLOG
+
+  const allPosts = await getBlogPosts();
+
+  // create blog listing page
+  const blogLanding = require.resolve("./src/templates/blogLanding.js");
+  createPage({
+    path: `blog`,
+    component: blogLanding,
+    context: { allPosts },
+  });
+
+  // create a page for each blog post
+  allPosts.posts.forEach((post) => {
+    createPage({
+      path: `/post/${post.ID}/`,
+      component: path.resolve("src/templates/blogPost.js"),
+      context: { post },
+    });
   });
 };

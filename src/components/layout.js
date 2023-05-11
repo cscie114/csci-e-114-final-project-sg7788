@@ -9,6 +9,11 @@ const Layout = ({ pageTitle, children }) => {
           <Link to="/">Plant Explorer</Link>
         </h1>
       </header>
+      <nav>
+        <p className="container">
+          <Link to="/">Plants</Link> | <Link to="/blog">Blog</Link>{" "}
+        </p>
+      </nav>
       <main>
         <h2>{pageTitle}</h2>
         {children}
